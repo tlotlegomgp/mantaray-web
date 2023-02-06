@@ -152,7 +152,7 @@ export default {
   },
 
   computed: {
-    profressBarValue() {
+    progressBarValue() {
       return Math.round((this.formPageCount * 100) / this.totalFormPagesCount);
     },
   },
@@ -172,7 +172,7 @@ export default {
         </p>
         <div v-if="formPageCount < 6" class="mb-5">
           <v-progress-linear
-            :model-value="profressBarValue"
+            :model-value="progressBarValue"
             color="#97a93d"
             :height="5"
           ></v-progress-linear>
@@ -276,7 +276,14 @@ export default {
             Merchant Terminal
           </p>
           <br />
-          <p>Upload terminal photo</p>
+          <p
+            class="mb-5 mt-5 text-center"
+            style="padding: 10px; font-size: 19px"
+          >
+            Upload an image of your terminal. Please ensure the image is well
+            lit and the terminal is clearly visible.
+          </p>
+          <TerminalFileUploadForm />
         </div>
         <div v-else-if="formPageCount == 4">
           <p
@@ -289,6 +296,7 @@ export default {
           <p class="mb-3" style="padding: 10px">
             Confirm terminal information:
           </p>
+          <TerminalDataValidationForm />
         </div>
         <div v-else-if="formPageCount == 5">
           <p
@@ -298,7 +306,14 @@ export default {
             Site Inspection
           </p>
           <br />
-          <p>Upload shop images</p>
+          <p
+            class="mb-5 mt-5 text-center"
+            style="padding: 10px; font-size: 19px"
+          >
+            Upload images of the store. Please ensure the images of the site are
+            well lit and the store is clearly visible.
+          </p>
+          <StoreImagesFileUploadForm />
         </div>
         <div v-else-if="formPageCount > 5" class="text-center">
           <br /><br /><br /><br />

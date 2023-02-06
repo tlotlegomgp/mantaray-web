@@ -8,18 +8,15 @@
             multiple
             model="storeFiles"
             label="Store images"
+            accept="image/png, image/jpeg, image/bmp"
+            prepend-icon="mdi-camera"
             :rules="rules"
           ></v-file-input>
         </v-col>
       </v-row>
-      <SubmitButton />
     </v-container>
   </v-form>
 </template>
-
-<script setup>
-import SubmitButton from "@/components/SubmitButton.vue";
-</script>
 
 <script>
 export default {

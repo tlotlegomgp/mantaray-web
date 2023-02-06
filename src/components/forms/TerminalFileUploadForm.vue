@@ -5,20 +5,16 @@
         <v-col>
           <v-file-input
             label="Upload terminal image"
-            accept="image/*"
+            accept="image/png, image/jpeg, image/bmp"
+            prepend-icon="mdi-camera"
             model="terminalImage"
             :rules="rules"
           ></v-file-input>
         </v-col>
       </v-row>
-      <SubmitButton />
     </v-container>
   </v-form>
 </template>
-
-<script setup>
-import SubmitButton from "@/components/SubmitButton.vue";
-</script>
 
 <script>
 export default {

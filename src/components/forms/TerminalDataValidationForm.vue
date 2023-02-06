@@ -12,14 +12,9 @@
           ></v-text-field>
         </v-col>
       </v-row>
-      <SubmitButton />
     </v-container>
   </v-form>
 </template>
-
-<script setup>
-import SubmitButton from "@/components/SubmitButton.vue";
-</script>
 
 <script>
 export default {
