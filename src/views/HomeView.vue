@@ -73,7 +73,7 @@ export default {
         async uploadIDImage() {
             const response = await axios.post('/api/totals', self.totals)
                 .then(function (response2) {
-                    console.log("Hello");
+                    console.log(response2);
                 })
                 .catch(function (error) {
                     console.log(error);
