@@ -2,37 +2,12 @@
   <v-form v-model="valid">
     <v-container>
       <v-row>
-        <v-col cols="12" md="6">
+        <v-col>
           <v-file-input
-            label="Upload store image"
-            accept="image/*"
-            model="storeFile"
-            :rules="rules"
-          ></v-file-input>
-        </v-col>
-        <v-col cols="12" md="6">
-          <v-file-input
-            label="Upload store image"
-            accept="image/*"
-            model="storeFile"
-            :rules="rules"
-          ></v-file-input>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="12" md="6">
-          <v-file-input
-            label="Upload store image"
-            accept="image/*"
-            model="storeFile"
-            :rules="rules"
-          ></v-file-input>
-        </v-col>
-        <v-col cols="12" md="6">
-          <v-file-input
-            label="Upload store image"
-            accept="image/*"
-            model="storeFile"
+            chips
+            multiple
+            model="storeFiles"
+            label="Store images"
             :rules="rules"
           ></v-file-input>
         </v-col>
@@ -50,10 +25,10 @@ import SubmitButton from "@/components/SubmitButton.vue";
 export default {
   data: () => ({
     valid: false,
-    storeFile: "",
+    storeFiles: [],
     rules: [
-      (v) => !!v || "Store image is required",
-      (v) => (v && v.size > 0) || "Store image is required",
+      (value) => (value && value.length >= 3) || "At least 3 files required",
+      (value) => (value && value.length <= 5) || "At most 5 files required",
     ],
   }),
 };

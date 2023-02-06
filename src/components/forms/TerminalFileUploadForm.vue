@@ -1,8 +1,8 @@
 <template>
   <v-form v-model="valid">
     <v-container>
-      <v-row justify="center">
-        <v-col cols="12" md="6">
+      <v-row>
+        <v-col>
           <v-file-input
             label="Upload terminal image"
             accept="image/*"
