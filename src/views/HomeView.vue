@@ -1,57 +1,193 @@
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
-            formPageCount: 0,
+            formPageCount: 1,
             totalFormPagesCount: 5,
-        }
+
+            valid: false,
+            firstname: "",
+            lastname: "",
+            nameRules: [
+                (value) => {
+                    if (value) return true;
+
+                    return "Name is requred.";
+                },
+                (value) => {
+                    if (value?.length <= 20) return true;
+
+                    return "Name must be less than 20 characters.";
+                },
+            ],
+            email: "",
+            emailRules: [
+                (value) => {
+                    if (value) return true;
+
+                    return "E-mail is requred.";
+                },
+                (value) => {
+                    if (/.+@.+\..+/.test(value)) return true;
+
+                    return "E-mail must be valid.";
+                },
+            ],
+
+            identityNumber: "",
+            identityRules: [
+                (value) => {
+                    if (value) return true;
+
+                    return "Identity Number is requred.";
+                },
+                (value) => {
+                    if (value?.length <= 20) return true;
+
+                    return "Name must be less than 10 characters.";
+                },
+            ],
+
+            genders: ["Male", "Female", "Other"],
+
+            ImageRules: [
+                (value) => {
+                    return (
+                        !value ||
+                        !value.length ||
+                        value[0].size < 2000000 ||
+                        "Image size should be less than 2 MB!"
+                    );
+                },
+            ],
+        };
     },
 
     methods: {
         nextPage() {
-            this.formPageCount++
+            this.formPageCount++;
+        },
+
+        async uploadIDImage() {
+            const response = await axios.post('/api/totals', self.totals)
+                .then(function (response2) {
+                    console.log("Hello");
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+            console.log(response)
+
         },
 
     },
 
     computed: {
         profressBarValue() {
-            return Math.round(this.formPageCount * 100 / this.totalFormPagesCount)
-        }
-    }
-}
+            return Math.round((this.formPageCount * 100) / this.totalFormPagesCount);
+        },
+    },
+};
 </script>
 
 <template>
     <v-container>
-        <v-row no-gutters>
+        <v-row justify="center" no-gutters>
             <v-col cols="12" sm="12" md="10" lg="8">
-                <p class="mt-10 mb-10 text-center">1 of 5</p>
-                <div>
-                    <v-progress-linear :model-value="profressBarValue" color="purple"></v-progress-linear>
-                    <br>
+                <p v-if="formPageCount < 6" class="mt-10 mb-10 text-center"
+                    style="font-weight: 500; font-size: large; color: #636b30">
+                    {{ formPageCount }} of {{ totalFormPagesCount }}
+                </p>
+                <div v-if="formPageCount < 6" class="mb-5">
+                    <v-progress-linear :model-value="profressBarValue" color="#97a93d" :height="5"></v-progress-linear>
+                    <br />
                 </div>
-                <div v-if="formPageCount == 0">
-                    <p>Upload document</p>
-                </div>
-                <div v-else-if="formPageCount == 1">
-                    <p>Validate document data</p>
+                <div v-if="formPageCount == 1">
+                    <p class="text-center mb-5" style="font-size: 30px; font-weight: 600; color: #636b30">
+                        Identification
+                    </p>
+                    <br />
+                    <p class="mb-5 mt-5 text-center" style="padding: 10px; font-size: 19px">
+                        Upload an image of your asylum document. Please ensure the image of
+                        the document is well lit and all the contents are clearly visible.
+                    </p>
+                    <v-file-input :rules="ImageRules" accept="image/png, image/jpeg, image/bmp"
+                        prepend-icon="mdi-camera" label="Asylum Document"></v-file-input>
+                    <br /><br />
                 </div>
                 <div v-else-if="formPageCount == 2">
-                    <p>Upload terminal photo</p>
+                    <p class="text-center mb-5" style="font-size: 30px; font-weight: 600; color: #636b30">
+                        Identification
+                    </p>
+                    <br />
+                    <p style="padding: 10px">Confirm document data:</p>
+                    <v-form v-model="valid">
+                        <v-container>
+                            <v-row justify="center">
+                                <v-col cols="12" md="6">
+                                    <v-text-field v-model="firstname" :rules="nameRules" :counter="20"
+                                        label="First name" variant="outlined" required></v-text-field>
+                                </v-col>
+
+                                <v-col cols="12" md="6">
+                                    <v-text-field v-model="lastname" :rules="nameRules" :counter="20" label="Last name"
+                                        variant="outlined" required></v-text-field>
+                                </v-col>
+
+                                <v-col cols="12" md="6">
+                                    <v-text-field v-model="identityNumber" :rules="identityRules" :counter="13"
+                                        label="Identity Number" variant="outlined" required></v-text-field>
+                                </v-col>
+
+                                <v-col cols="12" md="6">
+                                    <v-select :items="genders" label="Gender" variant="outlined" required></v-select>
+                                </v-col>
+                            </v-row>
+                        </v-container>
+                    </v-form>
                 </div>
                 <div v-else-if="formPageCount == 3">
-                    <p>validate terminal photo</p>
+                    <p class="text-center mb-5" style="font-size: 30px; font-weight: 600; color: #636b30">
+                        Merchant Terminal
+                    </p>
+                    <br />
+                    <p>Upload terminal photo</p>
                 </div>
                 <div v-else-if="formPageCount == 4">
+                    <p class="text-center mb-5" style="font-size: 30px; font-weight: 600; color: #636b30">
+                        Merchant Terminal
+                    </p>
+                    <br />
+                    <p class="mb-3" style="padding: 10px">
+                        Confirm terminal information:
+                    </p>
+                </div>
+                <div v-else-if="formPageCount == 5">
+                    <p class="text-center mb-5" style="font-size: 30px; font-weight: 600; color: #636b30">
+                        Site Inspection
+                    </p>
+                    <br />
                     <p>Upload shop images</p>
                 </div>
-                <div v-else-if="formPageCount > 4">
-                    <p>Your appplication has been submitted!!!</p>
+                <div v-else-if="formPageCount > 5" class="text-center">
+                    <br /><br /><br /><br />
+                    <v-icon icon="mdi mdi-checkbox-marked-circle-outline" size="200" class="mt-5 mb-5"
+                        color="#97a93d"></v-icon>
+                    <p class="mt-5" style="font-size: x-large">
+                        Your appplication has been submited!
+                    </p>
                 </div>
-                <v-btn variant="flat" rounded="pill" color="primary" class="mt-5" @click="nextPage()">
-                    Next
-                </v-btn>
+
+                <div v-if="formPageCount < 6" class="d-flex justify-center align-baseline" style="padding-right: 5px">
+                    <v-spacer></v-spacer>
+                    <v-btn variant="flat" append-icon="mdi-arrow-right" rounded="pill" color="#97a93d" class="mt-5"
+                        size="large" @click="nextPage()">
+                        Next
+                    </v-btn>
+                </div>
             </v-col>
         </v-row>
     </v-container>
