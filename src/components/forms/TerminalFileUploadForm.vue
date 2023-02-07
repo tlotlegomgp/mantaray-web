@@ -1,5 +1,5 @@
 <template>
-  <v-form v-model="valid" v-on:submit="post">
+  <v-form v-model="valid">
     <p
       class="text-center mb-5"
       style="font-size: 30px; font-weight: 600; color: #636b30"
@@ -24,7 +24,6 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-btn type="submit" block class="mt-2">Submit</v-btn>
   </v-form>
 </template>
 
@@ -36,8 +35,8 @@ export default {
     valid: false,
     terminalImage: "",
     rules: [
-      (v) => !!v || "Terminal image is required",
-      (v) => (v && v.size > 0) || "Terminal image is required",
+      (value) => !!value || "Terminal image is required",
+      (value) => (value && value[0]?.size > 0) || "Terminal image is required",
     ],
   }),
 
@@ -46,8 +45,7 @@ export default {
       axios
         .post(
           "https://1ydvd2q6ka.execute-api.us-east-1.amazonaws.com/v1/uploadcontent/",
-          {},
-          { crossdomain: true }
+          {}
         )
         .then((response) => {
           console.log("response", response);
