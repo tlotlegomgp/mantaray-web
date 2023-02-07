@@ -3,7 +3,7 @@
     <v-row no-gutters>
       <v-col cols="12" sm="12" md="10" lg="8" class="text-center">
         <br />
-        <v-img src="src/assets/img/kazang-logo.svg" class="mt-5 mb-5"></v-img>
+        <v-img src="dist/assets/img/kazang-logo.svg" class="mt-5 mb-5"></v-img>
         <br />
         <p
           class="text-center mb-5"
