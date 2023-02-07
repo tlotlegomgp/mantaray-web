@@ -1,7 +1,7 @@
 <script setup>
 import TerminalFileUploadForm from "@/components/forms/TerminalFileUploadForm.vue";
 import TerminalDataValidationForm from "@/components/forms/TerminalDataValidationForm.vue";
-import StoreImagesFileUploadForm from "@/components/forms/StoreImagesFileUploadForm.vue";
+import SiteImagesFileUploadForm from "@/components/forms/SiteImagesFileUploadForm.vue";
 </script>
 
 <script>
@@ -269,51 +269,13 @@ export default {
           </v-form>
         </div>
         <div v-else-if="formPageCount == 3">
-          <p
-            class="text-center mb-5"
-            style="font-size: 30px; font-weight: 600; color: #636b30"
-          >
-            Merchant Terminal
-          </p>
-          <br />
-          <p
-            class="mb-5 mt-5 text-center"
-            style="padding: 10px; font-size: 19px"
-          >
-            Upload an image of your terminal. Please ensure the image is well
-            lit and the terminal is clearly visible.
-          </p>
           <TerminalFileUploadForm />
         </div>
         <div v-else-if="formPageCount == 4">
-          <p
-            class="text-center mb-5"
-            style="font-size: 30px; font-weight: 600; color: #636b30"
-          >
-            Merchant Terminal
-          </p>
-          <br />
-          <p class="mb-3" style="padding: 10px">
-            Confirm terminal information:
-          </p>
           <TerminalDataValidationForm />
         </div>
         <div v-else-if="formPageCount == 5">
-          <p
-            class="text-center mb-5"
-            style="font-size: 30px; font-weight: 600; color: #636b30"
-          >
-            Site Inspection
-          </p>
-          <br />
-          <p
-            class="mb-5 mt-5 text-center"
-            style="padding: 10px; font-size: 19px"
-          >
-            Upload images of the store. Please ensure the images of the site are
-            well lit and the store is clearly visible.
-          </p>
-          <StoreImagesFileUploadForm />
+          <SiteImagesFileUploadForm />
         </div>
         <div v-else-if="formPageCount > 5" class="text-center">
           <br /><br /><br /><br />

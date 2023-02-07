@@ -1,5 +1,16 @@
 <template>
   <v-form v-model="valid">
+    <p
+      class="text-center mb-5"
+      style="font-size: 30px; font-weight: 600; color: #636b30"
+    >
+      Site Inspection
+    </p>
+    <br />
+    <p class="mb-5 mt-5 text-center" style="padding: 10px; font-size: 19px">
+      Upload images of the site. Please ensure the images of the site are well
+      lit and the site is clearly visible.
+    </p>
     <v-container>
       <v-row>
         <v-col>

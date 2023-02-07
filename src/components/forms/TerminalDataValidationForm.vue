@@ -1,5 +1,13 @@
 <template>
   <v-form v-model="valid">
+    <p
+      class="text-center mb-5"
+      style="font-size: 30px; font-weight: 600; color: #636b30"
+    >
+      Merchant Terminal
+    </p>
+    <br />
+    <p class="mb-3" style="padding: 10px">Confirm terminal information:</p>
     <v-container>
       <v-row>
         <v-col>
@@ -8,6 +16,7 @@
             :rules="rules"
             :counter="20"
             label="Serial number"
+            variant="outlined"
             required
           ></v-text-field>
         </v-col>
