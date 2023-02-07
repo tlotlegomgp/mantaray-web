@@ -2,6 +2,7 @@
 import TerminalFileUploadForm from "@/components/forms/TerminalFileUploadForm.vue";
 import TerminalDataValidationForm from "@/components/forms/TerminalDataValidationForm.vue";
 import SiteImagesFileUploadForm from "@/components/forms/SiteImagesFileUploadForm.vue";
+import SiteAddressDataValidationForm from "@/components/forms/SiteAddressDataValidationForm.vue";
 </script>
 
 <script>
@@ -164,13 +165,13 @@ export default {
     <v-row justify="center" no-gutters>
       <v-col cols="12" sm="12" md="10" lg="8">
         <p
-          v-if="formPageCount < 6"
+          v-if="formPageCount < 7"
           class="mt-10 mb-10 text-center"
           style="font-weight: 500; font-size: large; color: #636b30"
         >
           {{ formPageCount }} of {{ totalFormPagesCount }}
         </p>
-        <div v-if="formPageCount < 6" class="mb-5">
+        <div v-if="formPageCount < 7" class="mb-5">
           <v-progress-linear
             :model-value="progressBarValue"
             color="#97a93d"
@@ -277,7 +278,10 @@ export default {
         <div v-else-if="formPageCount == 5">
           <SiteImagesFileUploadForm />
         </div>
-        <div v-else-if="formPageCount > 5" class="text-center">
+        <div v-else-if="formPageCount == 6">
+          <SiteAddressDataValidationForm />
+        </div>
+        <div v-else-if="formPageCount > 6" class="text-center">
           <br /><br /><br /><br />
           <v-icon
             icon="mdi mdi-checkbox-marked-circle-outline"
@@ -291,7 +295,7 @@ export default {
         </div>
 
         <div
-          v-if="formPageCount < 6"
+          v-if="formPageCount < 7"
           class="d-flex justify-center align-baseline"
           style="padding-right: 5px"
         >

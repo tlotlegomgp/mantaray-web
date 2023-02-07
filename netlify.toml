@@ -1,4 +1,4 @@
 [[headers]]
-  for = "https://1ydvd2q6ka.execute-api.us-east-1.amazonaws.com/*"
+  for = "https://1ydvd2q6ka.execute-api.us-east-1.amazonaws.com/v1/uploadcontent/"
     [headers.values]
     Access-Control-Allow-Origin = "*"
