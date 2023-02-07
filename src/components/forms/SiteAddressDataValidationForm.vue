@@ -14,10 +14,11 @@
           <v-text-field
             v-model="address"
             :rules="rules"
-            :counter="20"
+            :counter="100"
             label="Site address"
             variant="outlined"
             required
+            readOnly
           ></v-text-field>
         </v-col>
       </v-row>
