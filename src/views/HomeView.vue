@@ -17,7 +17,7 @@ export default {
         (value) => {
           if (value) return true;
 
-          return "Name is requred.";
+          return "Name is required.";
         },
         (value) => {
           if (value?.length <= 20) return true;
@@ -30,7 +30,7 @@ export default {
         (value) => {
           if (value) return true;
 
-          return "E-mail is requred.";
+          return "E-mail is required.";
         },
         (value) => {
           if (/.+@.+\..+/.test(value)) return true;
