@@ -1,7 +1,7 @@
 <script>
 import axios from "axios";
 axios.defaults.baseURL =
-    "https://1ydvd2q6ka.execute-api.us-east-1.amazonaws.com/";
+    "https://yozrvvzd96.execute-api.us-east-1.amazonaws.com/v1/";
 
 export default {
     data() {
@@ -88,11 +88,11 @@ export default {
             if (this.formPageCount == 1) {
                 this.uploadIDImage();
             } else if (this.formPageCount == 2) {
-                console.log("2");
+                this.nextPage();
             } else if (this.formPageCount == 3) {
                 console.log("3");
             } else if (this.formPageCount == 4) {
-                console.log("4");
+                this.nextPage();
             } else if (this.formPageCount == 5) {
                 console.log("5");
             } else if (this.formPageCount == 6) {
@@ -113,39 +113,23 @@ export default {
             this.formPageCount++;
         },
 
-        // getFileInBase64(file) {
-        //     return new Promise((resolve, reject) => {
-        //         const reader = new FileReader();
-        //         reader.readAsDataURL(file);
-        //         reader.onload = () => resolve(reader.result);
-        //         reader.onerror = (error) => reject(error);
-        //     });
-        // },
-
         async uploadIDImage() {
             let formData = new FormData();
-
-            // for (let image of this.idImage) {
-            //     let result = await this.getFileInBase64(image).then(
-            //         (res) => {
-            //             formData.append("id-doc", String(res));
-            //         },
-            //         (failure) => {
-            //             console.error(failure);
-            //         }
-            //     );
-            // }
 
             for (let image of this.idImage) {
                 formData.append("id-doc", image);
             }
 
             const response = await axios
-                .post("v1/uploadcontent/", formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                })
+                .post(
+                    "uploadcontent",
+                    formData,
+                    {
+                        headers: {
+                            "Content-Type": "application/pdf",
+                        },
+                    }
+                )
                 .then((response) => {
                     console.log(response.code);
                     if (response.code == 200) {
@@ -156,6 +140,7 @@ export default {
                     }
                 })
                 .catch((error) => {
+                    console.log(error);
                     this.errorMessage = "Oops! Something went wrong.";
                     this.snackbar = true;
                 });
@@ -195,15 +180,8 @@ export default {
                     </p>
                     <v-form v-model="formValid" ref="form">
                         <v-file-input v-model="idImage" :rules="imageRules" accept="image/png, image/jpeg, image/bmp"
-                            prepend-icon="mdi-camera" label="Asylum Document" v-on:keyup.enter="validateInput"
-                            show-size></v-file-input>
-                        <div class="d-flex justify-center align-baseline" style="padding-right: 5px">
-                            <v-spacer></v-spacer>
-                            <v-btn variant="flat" append-icon="mdi-arrow-right" rounded="pill" color="#97a93d"
-                                class="mt-5" size="large" @click="validateInput()" :loading="buttonLoading">
-                                Next
-                            </v-btn>
-                        </div>
+                            prepend-icon="mdi-camera" label="Asylum Document" v-on:keyup.enter="validateInput" show-size
+                            clearable=""></v-file-input>
                     </v-form>
 
                     <br /><br />
@@ -219,30 +197,23 @@ export default {
                             <v-row justify="center">
                                 <v-col cols="12" md="6">
                                     <v-text-field v-model="firstname" :rules="nameRules" :counter="20"
-                                        label="First name" variant="outlined" required></v-text-field>
+                                        label="First name" variant="outlined" clearable required></v-text-field>
                                 </v-col>
 
                                 <v-col cols="12" md="6">
                                     <v-text-field v-model="lastname" :rules="nameRules" :counter="20" label="Last name"
-                                        variant="outlined" required></v-text-field>
+                                        variant="outlined" clearable required></v-text-field>
                                 </v-col>
 
                                 <v-col cols="12" md="6">
                                     <v-text-field v-model="identityNumber" :rules="identityRules" :counter="13"
-                                        label="Identity Number" variant="outlined" required></v-text-field>
+                                        label="Identity Number" variant="outlined" clearable required></v-text-field>
                                 </v-col>
 
                                 <v-col cols="12" md="6">
                                     <v-select :items="genders" label="Gender" variant="outlined" required></v-select>
                                 </v-col>
                             </v-row>
-                            <div class="d-flex justify-center align-baseline" style="padding-right: 5px">
-                                <v-spacer></v-spacer>
-                                <v-btn variant="flat" append-icon="mdi-arrow-right" rounded="pill" color="#97a93d"
-                                    class="mt-5" size="large" @click="validateInput()" :loading="buttonLoading">
-                                    Next
-                                </v-btn>
-                            </div>
                         </v-container>
                     </v-form>
                 </div>
@@ -276,6 +247,14 @@ export default {
                     <p class="mt-5" style="font-size: x-large">
                         Your application has been submitted!
                     </p>
+                </div>
+
+                <div v-if="formPageCount < 6" class="d-flex justify-center align-baseline" style="padding-right: 5px">
+                    <v-spacer></v-spacer>
+                    <v-btn variant="flat" append-icon="mdi-arrow-right" rounded="pill" color="#97a93d" class="mt-5"
+                        size="large" @click="validateInput()" :loading="buttonLoading">
+                        Next
+                    </v-btn>
                 </div>
 
                 <v-snackbar v-model="snackbar" :timeout="snackbarTimeout" color="#FF312E">
