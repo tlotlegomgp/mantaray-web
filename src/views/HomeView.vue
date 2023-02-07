@@ -1,10 +1,3 @@
-<script setup>
-import TerminalFileUploadForm from "@/components/forms/TerminalFileUploadForm.vue";
-import TerminalDataValidationForm from "@/components/forms/TerminalDataValidationForm.vue";
-import SiteImagesFileUploadForm from "@/components/forms/SiteImagesFileUploadForm.vue";
-import SiteAddressDataValidationForm from "@/components/forms/SiteAddressDataValidationForm.vue";
-</script>
-
 <script>
 import axios from "axios";
 axios.defaults.baseURL =
@@ -51,7 +44,7 @@ export default {
         (value) => {
           if (value) return true;
 
-          return "Identity Number is requred.";
+          return "Identity Number is required.";
         },
         (value) => {
           if (value?.length <= 20) return true;
@@ -69,7 +62,7 @@ export default {
         (value) => {
           if (value) return true;
 
-          return "Image is requred.";
+          return "Image is required.";
         },
         (value) => {
           return (
@@ -79,6 +72,25 @@ export default {
             "Image size should be less than 2 MB!"
           );
         },
+      ],
+
+      serial_number: "",
+      serialNumberRules: [
+        (value) => (value ? true : `Serial number is required.`),
+        (value) =>
+          value?.length <= 20
+            ? true
+            : `Serial number must be less than 20 characters.`,
+      ],
+
+      address:
+        "F3, Block D, Sable Square Corner of Bosmansdam Rd and, Ratanga Rd, Milnerton, 7441",
+      rules: [
+        (value) => (value ? true : `Site address is required.`),
+        (value) =>
+          value?.length <= 100
+            ? true
+            : `Site address must be less than 100 characters.`,
       ],
 
       buttonLoading: false,
@@ -270,16 +282,125 @@ export default {
           </v-form>
         </div>
         <div v-else-if="formPageCount == 3">
-          <TerminalFileUploadForm />
+          <v-form v-model="formValid" ref="form">
+            <p
+              class="text-center mb-5"
+              style="font-size: 30px; font-weight: 600; color: #636b30"
+            >
+              Merchant Terminal
+            </p>
+            <br />
+            <p
+              class="mb-5 mt-5 text-center"
+              style="padding: 10px; font-size: 19px"
+            >
+              Upload an image of your terminal. Please ensure the image is well
+              lit and the terminal is clearly visible.
+            </p>
+            <v-container>
+              <v-row>
+                <v-col>
+                  <v-file-input
+                    label="Upload terminal image"
+                    accept="image/png, image/jpeg, image/bmp"
+                    prepend-icon="mdi-camera"
+                    model="terminalImage"
+                    :rules="imageRules"
+                  ></v-file-input>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-form>
         </div>
         <div v-else-if="formPageCount == 4">
-          <TerminalDataValidationForm />
+          <v-form v-model="formValid" ref="form">
+            <p
+              class="text-center mb-5"
+              style="font-size: 30px; font-weight: 600; color: #636b30"
+            >
+              Merchant Terminal
+            </p>
+            <br />
+            <p class="mb-3" style="padding: 10px">
+              Confirm terminal information:
+            </p>
+            <v-container>
+              <v-row>
+                <v-col>
+                  <v-text-field
+                    v-model="serial_number"
+                    :rules="serialNumberRules"
+                    :counter="20"
+                    label="Serial number"
+                    variant="outlined"
+                    required
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-form>
         </div>
         <div v-else-if="formPageCount == 5">
-          <SiteImagesFileUploadForm />
+          <v-form v-model="formValid" ref="form">
+            <p
+              class="text-center mb-5"
+              style="font-size: 30px; font-weight: 600; color: #636b30"
+            >
+              Site Inspection
+            </p>
+            <br />
+            <p
+              class="mb-5 mt-5 text-center"
+              style="padding: 10px; font-size: 19px"
+            >
+              Upload images of the site. Please ensure the images of the site
+              are well lit and the site is clearly visible.
+            </p>
+            <v-container>
+              <v-row>
+                <v-col>
+                  <v-file-input
+                    chips
+                    multiple
+                    model="inspectionImages"
+                    label="Store images"
+                    accept="image/png, image/jpeg, image/bmp"
+                    prepend-icon="mdi-camera"
+                    :rules="rules"
+                  ></v-file-input>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-form>
         </div>
         <div v-else-if="formPageCount == 6">
-          <SiteAddressDataValidationForm />
+          <v-form v-model="formValid" ref="form">
+            <p
+              class="text-center mb-5"
+              style="font-size: 30px; font-weight: 600; color: #636b30"
+            >
+              Site Address
+            </p>
+            <br />
+            <p class="mb-3" style="padding: 10px">
+              Confirm site address information:
+            </p>
+            <v-container>
+              <v-row>
+                <v-col>
+                  <v-text-field
+                    v-model="address"
+                    :rules="addressRules"
+                    :counter="100"
+                    label="Site address"
+                    variant="outlined"
+                    required
+                    readOnly
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-form>
         </div>
         <div v-else-if="formPageCount > 6" class="text-center">
           <br /><br /><br /><br />
