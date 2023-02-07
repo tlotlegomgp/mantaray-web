@@ -31,6 +31,20 @@
 import axios from "axios";
 
 export default {
+  onMounted() {
+    axios
+      .post(
+        "https://1ydvd2q6ka.execute-api.us-east-1.amazonaws.com/v1/uploadcontent/",
+        {}
+      )
+      .then((response) => {
+        console.log("response", response);
+      })
+      .catch((error) => {
+        console.error("error", error);
+      });
+  },
+
   data: () => ({
     valid: false,
     terminalImage: "",
