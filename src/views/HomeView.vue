@@ -409,6 +409,16 @@ export default {
           <p class="mt-5" style="font-size: x-large">
             Your application has been submitted!
           </p>
+
+          <!-- <v-icon
+            icon="mdi mdi-close-circle-outline"
+            size="200"
+            class="mt-5 mb-5"
+            color="#FF312E"
+          ></v-icon>
+          <p class="mt-5" style="font-size: x-large">
+            Duplicate detected, please contact support.
+          </p> -->
         </div>
 
         <div
