@@ -147,6 +147,41 @@ export default {
 
             this.buttonLoading = false;
         },
+
+        async uploadIDImage() {
+            let formData = new FormData();
+
+            for (let image of this.idImage) {
+                formData.append("id-doc", image);
+            }
+
+            const response = await axios
+                .post(
+                    "uploadcontent",
+                    formData,
+                    {
+                        headers: {
+                            "Content-Type": "application/pdf",
+                        },
+                    }
+                )
+                .then((response) => {
+                    console.log(response.code);
+                    if (response.code == 200) {
+                        this.nextPage();
+                    } else {
+                        this.errorMessage = "Oops! Failed to upload image.";
+                        this.snackbar = true;
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.errorMessage = "Oops! Something went wrong.";
+                    this.snackbar = true;
+                });
+
+            this.buttonLoading = false;
+        },
     },
 
     computed: {
