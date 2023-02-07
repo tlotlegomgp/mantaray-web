@@ -1,7 +1,6 @@
 <script>
 import axios from "axios";
-axios.defaults.baseURL =
-  "https://yozrvvzd96.execute-api.us-east-1.amazonaws.com/v1/";
+axios.defaults.baseURL = "/api";
 
 export default {
   data() {

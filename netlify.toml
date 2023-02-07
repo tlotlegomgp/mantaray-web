@@ -1,4 +1,10 @@
+[[redirects]]
+  from = "/api"
+  to = "https://yozrvvzd96.execute-api.us-east-1.amazonaws.com/v1/"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
 [[headers]]
-  for = "https://1ydvd2q6ka.execute-api.us-east-1.amazonaws.com/v1/uploadcontent/"
+  for = "/*"
     [headers.values]
     Access-Control-Allow-Origin = "*"
