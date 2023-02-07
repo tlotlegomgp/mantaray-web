@@ -7,7 +7,7 @@ export default {
   data() {
     return {
       formPageCount: 1,
-      totalFormPagesCount: 5,
+      totalFormPagesCount: 7,
       formValid: false,
 
       valid: false,
@@ -115,7 +115,7 @@ export default {
       } else if (this.formPageCount == 5) {
         console.log("5");
       } else if (this.formPageCount == 6) {
-        console.log("6");
+        this.nextPage();
       }
     },
 
@@ -140,11 +140,7 @@ export default {
       }
 
       const response = await axios
-        .post("uploadcontent", formData, {
-          headers: {
-            "Content-Type": "application/pdf",
-          },
-        })
+        .post("http://192.168.21.72:9086/v1/uploadcontent", formData)
         .then((response) => {
           console.log(response.code);
           if (response.code == 200) {
