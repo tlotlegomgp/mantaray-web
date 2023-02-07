@@ -31,7 +31,7 @@
 import axios from "axios";
 
 export default {
-  onMounted() {
+  mounted() {
     axios
       .post(
         "https://1ydvd2q6ka.execute-api.us-east-1.amazonaws.com/v1/uploadcontent/",
